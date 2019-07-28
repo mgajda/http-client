@@ -120,7 +120,9 @@ httpRaw' req0 m = do
                 now' <- getCurrentTime
                 let (cookie_jar, _) = updateCookieJar res req now' cookie_jar'
                 return (req, res {responseCookieJar = cookie_jar})
-            Nothing -> return (req, res)
+            Nothing -> do
+              putStrLn $ "Response headers: " ++ show (responseHeaders res)
+              return (req, res)
   where
     getConnectionWrapper mtimeout f =
         case mtimeout of
