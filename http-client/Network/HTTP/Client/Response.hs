@@ -91,6 +91,7 @@ getResponse :: Maybe Int
 getResponse timeout' req@(Request {..}) mconn cont = do
     let conn = managedResource mconn
     StatusHeaders s version hs <- parseStatusHeaders conn timeout' cont
+    print $ "StatusHeaders: " ++ show s ++ " hs:" ++ show hs
     let mcl = lookup "content-length" hs >>= readPositiveInt . S8.unpack
         isChunked = ("transfer-encoding", CI.mk "chunked") `elem` map (second CI.mk) hs
 
