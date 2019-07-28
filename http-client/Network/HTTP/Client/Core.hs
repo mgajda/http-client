@@ -87,6 +87,7 @@ httpRaw'
      -> IO (Request, Response BodyReader)
 httpRaw' req0 m = do
     let req' = mSetProxy m req0
+    putStrLn $ "request after mSetProxy: " ++ show req'
     (req, cookie_jar') <- case cookieJar req' of
         Just cj -> do
             now <- getCurrentTime

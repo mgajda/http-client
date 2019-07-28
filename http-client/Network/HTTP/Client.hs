@@ -249,7 +249,9 @@ responseOpenHistory reqOrig man0 = handle (throwIO . toHttpException reqOrig) $ 
     historyRef <- newIORef id
     let go req0 = do
             (man, req) <- getModifiedRequestManager man0 req0
+            putStrLn $ "modified request manager" ++ show req
             (req', res') <- httpRaw' req man
+            putStrLn $ "request after httpRaw'" ++ show req'
             let res = res'
                     { responseBody = handle (throwIO . toHttpException req0)
                                             (responseBody res')
